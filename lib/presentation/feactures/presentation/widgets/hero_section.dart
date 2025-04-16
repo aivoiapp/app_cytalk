@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:cytall/presentation/routes/app_router.dart' show AppRoutes;
+
 import 'package:cytall/presentation/feactures/presentation/widgets/widgets.dart';
 import 'package:cytall/presentation/resources/resources.dart';
+import 'package:go_router/go_router.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -46,8 +49,7 @@ class HeroSection extends StatelessWidget {
             text: 'Comenzar ahora',
             iconData: Icons.arrow_forward,
             onPressed: () {
-              // TODO: Implementar acción del botón
-              print('Comenzar ahora presionado');
+              context.pushNamed(AppRoutes.onboarding);
             },
           ),
         ],

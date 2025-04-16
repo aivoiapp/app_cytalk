@@ -19,7 +19,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _nameFormKey = GlobalKey<FormBuilderState>();
   final _ageFormKey = GlobalKey<FormBuilderState>();
   final _genderFormKey = GlobalKey<FormBuilderState>();
-  // ***** CAMBIO: Añadir clave para el nuevo formulario de nivel *****
   final _levelFormKey = GlobalKey<FormBuilderState>();
 
   late final Map<int, GlobalKey<FormBuilderState>> _formKeys;
