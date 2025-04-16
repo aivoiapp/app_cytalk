@@ -15,11 +15,6 @@ class GenderStepWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.people_outline,
-            size: 48,
-            color: AppColors.iconColor,
-          ),
           const SizedBox(height: 16),
           Text(
             "¿Con qué género te identificas?",
@@ -40,16 +35,19 @@ class GenderStepWidget extends StatelessWidget {
               border: InputBorder.none,
               contentPadding: EdgeInsets.zero,
             ),
-            options: const [
+            options: [
               FormBuilderFieldOption(
                 value: 'Masculino',
-                child: Text('Masculino'),
+                child: Text('Masculino', style: AppTextStyles.itensGender),
               ),
               FormBuilderFieldOption(
                 value: 'Femenino',
-                child: Text('Femenino'),
+                child: Text('Femenino', style: AppTextStyles.itensGender),
               ),
-              FormBuilderFieldOption(value: 'Otro', child: Text('Otro')),
+              FormBuilderFieldOption(
+                value: 'Otro',
+                child: Text('Otro', style: AppTextStyles.itensGender),
+              ),
             ],
             validator: FormBuilderValidators.required(
               errorText: 'Por favor selecciona una opción',

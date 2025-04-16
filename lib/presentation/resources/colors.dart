@@ -18,7 +18,7 @@ class AppColors {
 
   static const Color enabledBorder = Color(0x80FFFFFF);
   static const Color focusedBorder = Colors.white;
-  static const Color inputFill = Color(0x33FFFFFF);
+  static const Color inputFill = Color.fromARGB(137, 147, 76, 156);
 
   static const Color radioActive = buttonGradientEnd;
   static const Color radioInactive = Color(0x80FFFFFF);
@@ -26,5 +26,5 @@ class AppColors {
   static const Color progressIndicatorActive = buttonGradientStart;
   static const Color progressIndicatorInactive = Color(0x55FFFFFF);
 
-  static const Color testIntroIconBackground = Color(0x33FFFFFF);
+  static const Color testIntroIconBackground = Color.fromARGB(51, 77, 74, 74);
 }

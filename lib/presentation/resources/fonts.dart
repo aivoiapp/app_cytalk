@@ -14,12 +14,18 @@ class AppTextStyles {
   static TextStyle get headlineMedium => GoogleFonts.poppins(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: AppColors.primaryText,
+    color: const Color.fromARGB(255, 67, 61, 61),
   );
 
   // Subtítulos (Ej: "Nos encantaría conocerte")
   static TextStyle get subtitle => GoogleFonts.poppins(
     fontSize: 16,
+    fontWeight: FontWeight.normal,
+    color: const Color.fromARGB(255, 53, 49, 49),
+  );
+
+  static TextStyle get itensGender => GoogleFonts.poppins(
+    fontSize: 15,
     fontWeight: FontWeight.normal,
     color: const Color.fromARGB(255, 53, 49, 49),
   );

@@ -9,18 +9,11 @@ class TestIntroStepWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(Icons.psychology_outlined, size: 48, color: AppColors.iconColor),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.testIntroIconBackground,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.psychology_outlined,
-            size: 48,
-            color: AppColors.iconColor,
-          ),
+        CircleAvatar(
+          backgroundColor: AppColors.testIntroIconBackground,
+
+          radius: 34,
+          child: Icon(Icons.psychology_outlined, size: 48, color: Colors.red),
         ),
         const SizedBox(height: 24),
         Text(
@@ -37,19 +30,16 @@ class TestIntroStepWidget extends StatelessWidget {
         const SizedBox(height: 32),
         _buildInfoItem(
           icon: Icons.check_circle_outline,
+          colorICon: Colors.purple,
           title: "15 preguntas adaptativas",
           subtitle:
               "5 de gramática, 5 de comprensión lectora, 5 de vocabulario",
         ),
         const SizedBox(height: 16),
         _buildInfoItem(
-          icon: Icons.auto_awesome_outlined, // Icono de IA
-          title: "Inteligencia artificial",
-          subtitle: "Dificultad ajustada según tus respuestas anteriores",
-        ),
-        const SizedBox(height: 16),
-        _buildInfoItem(
           icon: Icons.timer_outlined,
+          colorICon: Colors.red,
+
           title: "Tiempo limitado",
           subtitle: "30 segundos por pregunta para evaluar tu fluidez",
         ),
@@ -61,6 +51,7 @@ class TestIntroStepWidget extends StatelessWidget {
     required IconData icon,
     required String title,
     required String subtitle,
+    required Color colorICon,
   }) {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -74,7 +65,11 @@ class TestIntroStepWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.iconColor, size: 24),
+          CircleAvatar(
+            radius: 19,
+            backgroundColor: colorICon.withOpacity(0.2),
+            child: Icon(icon, color: colorICon, size: 22),
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -82,14 +77,15 @@ class TestIntroStepWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppTextStyles.label.copyWith(fontSize: 15),
-                ), // Un poco más pequeño
+                  style: AppTextStyles.label.copyWith(
+                    fontSize: 15,
+                    color: Colors.black87,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: AppTextStyles.body.copyWith(
-                    color: AppColors.secondaryText,
-                  ),
+                  style: AppTextStyles.body.copyWith(color: Colors.white),
                 ),
               ],
             ),

@@ -34,7 +34,7 @@ class NameStepWidget extends StatelessWidget {
               hintText: 'Ingresa tu nombre',
               hintStyle: AppTextStyles.placeholder,
               filled: true,
-              fillColor: AppColors.inputFill,
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16.0),
                 borderSide: BorderSide.none,

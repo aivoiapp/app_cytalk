@@ -13,14 +13,15 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  final int _totalSteps = 4; // Name, Age, Gender, Test Intro
+  final int _totalSteps = 5;
 
   // Claves separadas para cada formulario
   final _nameFormKey = GlobalKey<FormBuilderState>();
   final _ageFormKey = GlobalKey<FormBuilderState>();
   final _genderFormKey = GlobalKey<FormBuilderState>();
+  // ***** CAMBIO: Añadir clave para el nuevo formulario de nivel *****
+  final _levelFormKey = GlobalKey<FormBuilderState>();
 
-  // Mapa para asociar claves con páginas
   late final Map<int, GlobalKey<FormBuilderState>> _formKeys;
 
   @override
@@ -30,10 +31,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       0: _nameFormKey,
       1: _ageFormKey,
       2: _genderFormKey,
-      // La página 3 (Test Intro) no necesita clave de formulario
+      3: _levelFormKey,
     };
     _pageController.addListener(() {
-      // Optimización: Solo actualizar si la página realmente cambió (evita múltiples builds)
       final newPage = _pageController.page?.round();
       if (newPage != null && newPage != _currentPage) {
         setState(() {
@@ -50,9 +50,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    // Validar el formulario de la página actual si tiene clave
     final currentFormKey = _formKeys[_currentPage];
-    bool isValid = true; // Asumir válido si no hay formulario
+    bool isValid = true;
 
     if (currentFormKey != null) {
       isValid = currentFormKey.currentState?.saveAndValidate() ?? false;
@@ -67,11 +66,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       } else {
         // Último paso: Acción final (Ej: Navegar a la prueba)
         print("Onboarding completado!");
-        // Aquí recolectarías los datos de los formKeys:
+        // Recolectar todos los datos
         final name = _nameFormKey.currentState?.value['name'];
         final age = _ageFormKey.currentState?.value['age'];
         final gender = _genderFormKey.currentState?.value['gender'];
-        print('Datos: Nombre=$name, Edad=$age, Género=$gender');
+        // ***** CAMBIO: Recolectar el nivel *****
+        final level = _levelFormKey.currentState?.value['level'];
+        print('Datos: Nombre=$name, Edad=$age, Género=$gender, Nivel=$level');
         // TODO: Guardar en SQLite y navegar a la pantalla de prueba
         // Navigator.pushReplacementNamed(context, '/placement_test'); // O usando GoRouter
       }
@@ -81,10 +82,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Evita que el teclado empuje todo hacia arriba
       resizeToAvoidBottomInset: false,
       body: Container(
-        // Fondo gradiente
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -98,7 +97,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // App Bar simple con logo (Ajusta el path a tu logo)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 16.0,
@@ -107,64 +105,66 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // Si tienes SVG:
-                    // SvgPicture.asset('assets/logo/cytalk_logo.svg', height: 30),
-                    // Si es texto:
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: 35,
+                      height: 35,
+                    ),
+                    SizedBox(width: 8),
                     Text(
                       'CyTalk',
                       style: AppTextStyles.headlineMedium.copyWith(
                         fontSize: 20,
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 20), // Espacio antes de la tarjeta
-              // Indicador de progreso encima de la tarjeta
+              const SizedBox(height: 20),
               StepProgressIndicator(
                 totalSteps: _totalSteps,
                 currentStep: _currentPage,
               ),
-
-              // PageView para los pasos dentro de la tarjeta
+              const SizedBox(height: 16),
               Expanded(
                 child: PageView(
                   controller: _pageController,
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   children: [
                     OnboardingCard(
                       child: NameStepWidget(formKey: _nameFormKey),
                     ),
                     OnboardingCard(child: AgeStepWidget(formKey: _ageFormKey)),
                     OnboardingCard(
+                      child: LevelStepWidget(formKey: _levelFormKey),
+                    ),
+                    OnboardingCard(
                       child: GenderStepWidget(formKey: _genderFormKey),
                     ),
-                    const OnboardingCard(
-                      child: TestIntroStepWidget(),
-                    ), // Sin form key
+
+                    const OnboardingCard(child: TestIntroStepWidget()),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 24), // Espacio antes del botón
-              // Botón de acción
+              const SizedBox(height: 24),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24.0,
                   vertical: 16.0,
                 ),
                 child: PrimaryButton(
+                  // ***** CAMBIO: Ajustar la lógica del texto del botón *****
                   text:
                       _currentPage == 2
-                          ? "Comenzar prueba de nivel" // Penúltimo paso
+                          ? "Continuar"
                           : _currentPage == 3
-                          ? "Comenzar prueba" // Último paso
-                          : "Continuar", // Otros pasos
+                          ? "Comenzar prueba"
+                          : "Continuar",
                   onPressed: _nextPage,
                 ),
               ),
-              const SizedBox(height: 16), // Espacio inferior
+              const SizedBox(height: 16),
             ],
           ),
         ),
