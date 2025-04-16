@@ -1,51 +1,30 @@
 import 'package:flutter/material.dart';
 
-Color colorBase(bool isDarkMode) => isDarkMode ? Colors.black : Colors.white;
-Color colorBottomNavegation(bool isDarkMode) =>
-    isDarkMode ? const Color(0xff222222) : Colors.white;
-Color colorAppBar(bool isDarkMode) =>
-    isDarkMode ? const Color.fromARGB(255, 42, 47, 53) : Colors.white60;
+class AppColors {
+  static const Color primaryPurple = Color(0xFF6A1B9A);
+  static const Color deepPurple = Color(0xFF311B92);
+  static const Color backgroundGradientStart = Color(0xFF4A148C);
+  static const Color backgroundGradientEnd = Color(0xFF880E4F);
 
-Color colorBell(bool isDarkMode) =>
-    isDarkMode ? const Color.fromARGB(255, 42, 47, 53) : Colors.white;
+  static const Color buttonGradientStart = Color(0xFF7B1FA2);
+  static const Color buttonGradientEnd = Color(0xFFD81B60);
 
-Color colorSelectCategory(bool isDarkMode) => isDarkMode
-    ? const Color.fromARGB(146, 80, 117, 168)
-    : const Color(0xffe1f7f6);
+  static const Color cardBackground = Color(0xFFFFFFFF);
 
-Color colorHead(bool isDarkMode) =>
-    isDarkMode ? Colors.red.shade900 : const Color(0xfffa6e68);
+  static const Color primaryText = Colors.white;
+  static const Color secondaryText = Color(0xFFE0E0E0);
+  static const Color placeholderText = Color(0xFFBDBDBD);
+  static const Color iconColor = Colors.white;
 
-Color colorSexo(bool isDarkMode) => isDarkMode
-    ? const Color.fromARGB(255, 240, 222, 111)
-    : const Color(0xfffaf0af);
+  static const Color enabledBorder = Color(0x80FFFFFF);
+  static const Color focusedBorder = Colors.white;
+  static const Color inputFill = Color(0x33FFFFFF);
 
-Color colorEdad(bool isDarkMode) => isDarkMode
-    ? const Color.fromARGB(255, 191, 134, 133)
-    : const Color(0xfffde0df);
+  static const Color radioActive = buttonGradientEnd;
+  static const Color radioInactive = Color(0x80FFFFFF);
 
-Color colorPeso(bool isDarkMode) => isDarkMode
-    ? const Color.fromARGB(255, 177, 153, 197)
-    : const Color(0xffefdbff);
+  static const Color progressIndicatorActive = buttonGradientStart;
+  static const Color progressIndicatorInactive = Color(0x55FFFFFF);
 
-Color colorVacunado(bool isDarkMode) => isDarkMode
-    ? const Color.fromARGB(255, 89, 212, 118)
-    : const Color(0xff7cd991);
-
-Color colorLocation(bool isDarkMode) =>
-    isDarkMode ? Colors.blue : const Color(0xff8ebbe3);
-
-Color colorLocationFondo(bool isDarkMode) =>
-    isDarkMode ? Colors.blue.shade100 : const Color(0xffe7f1f9);
-
-Color colorBubleFondo(bool isDarkMode) =>
-    isDarkMode ? Colors.grey.shade400 : const Color(0xffeaefef);
-
-Color colorBubleIcon(bool isDarkMode) =>
-    isDarkMode ? Colors.black : const Color(0xff5c6364);
-
-Color colorTopDetailAnimal(bool isDarkMode) =>
-    isDarkMode ? Colors.black : const Color(0xfff8fafa);
-
-Color colorSearch(bool isDarkMode) =>
-    isDarkMode ? const Color(0xff222222) : Colors.grey.shade200;
+  static const Color testIntroIconBackground = Color(0x33FFFFFF);
+}
