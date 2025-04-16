@@ -2,7 +2,7 @@ name: cytall
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -31,9 +31,76 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
+  # Gestor de estado
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
+  equatable: ^2.0.5
+
+  # Cliente HTTP
+  dio: ^5.4.3+1
+
+  # Programacion funcional
+  dartz: ^0.10.1
+
+  # Base de datos local
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Fuentes
+  google_fonts: ^6.2.1
+
+  # Inyector de dependencias
+  get_it: ^7.7.0
+
+  # Usar imagenes svg
+  flutter_svg: ^2.0.10+1
+
+  # Images en la cache
+  cached_network_image: ^3.3.1
+
+  # Efecto de cargando
+  shimmer: ^3.0.0
+
+  # Animaciones
+  animate_do: ^3.3.4
+
+  # Texto auto redimencionable
+  auto_size_text: ^3.0.0
+
+  # Verificar la red
+  internet_connection_checker: ^1.0.0+1
+
+  # Iconos
+  cupertino_icons: ^1.0.6
+  font_awesome_flutter: ^10.7.0
+
+  # Formulario
+  form_builder_validators: ^11.0.0
+  flutter_form_builder: ^9.3.0
+
+  # Variables de entorno
+  flutter_dotenv: ^5.1.0
+
+  # Informacion del dispositivo
+  package_info_plus: ^8.0.2
+
+  # Manejador de rutas
+  go_router: ^14.3.0
+
+  # Deslizar listas
+  flutter_slidable: ^3.1.1
+
+  # base de datos
+  sqflite: ^2.4.2
+
+  # Utilidades
+  uuid: ^4.5.1
+
+  # idioma
+  intl: ^0.19.0
+
+  # Preferencias de usurio
+  shared_preferences: ^2.5.2
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +118,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
