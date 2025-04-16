@@ -108,6 +108,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       'assets/images/logo.png',
                       width: 35,
                       height: 35,
+                      filterQuality: FilterQuality.medium,
+                      gaplessPlayback: true,
                     ),
                     SizedBox(width: 8),
                     Text(
