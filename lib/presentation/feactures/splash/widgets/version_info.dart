@@ -1,4 +1,4 @@
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:flutter/material.dart';
 
 class VersionInfo extends StatelessWidget {

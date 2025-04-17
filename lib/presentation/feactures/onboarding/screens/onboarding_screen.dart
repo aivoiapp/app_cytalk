@@ -1,7 +1,8 @@
-import 'package:cytall/presentation/feactures/onboarding/widgets/widgets.dart';
+import 'package:cytalk/l10n/app_localizations.dart';
+import 'package:cytalk/presentation/feactures/onboarding/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -199,10 +200,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 child: PrimaryButton(
                   // Ajustar la lógica del texto del botón según el paso actual
-                  text:
-                      _currentPage == 3
-                          ? "Comenzar prueba"
-                          : "Continuar",
+                  text: _currentPage == 3
+                      ? AppLocalizations.of(context).startTest // Use localized text
+                      : AppLocalizations.of(context).continueText, // Use localized text
                   onPressed: _nextPage,
                 ),
               ),

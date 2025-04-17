@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:cytall/presentation/feactures/presentation/views/views.dart';
-import 'package:cytall/presentation/feactures/presentation/widgets/widgets.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/feactures/presentation/views/views.dart';
+import 'package:cytalk/presentation/feactures/presentation/widgets/widgets.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

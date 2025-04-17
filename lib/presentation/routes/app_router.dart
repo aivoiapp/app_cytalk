@@ -1,9 +1,10 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:cytall/presentation/feactures/presentation/screens/home_screen.dart';
-import 'package:cytall/presentation/feactures/onboarding/onboarding.dart';
-import 'package:cytall/presentation/feactures/splash/splash.dart';
+import 'package:cytalk/presentation/feactures/presentation/screens/home_screen.dart';
+import 'package:cytalk/presentation/feactures/onboarding/onboarding.dart';
+import 'package:cytalk/presentation/feactures/splash/splash.dart';
 
 class AppRoutes {
   static const String splash = '/'; // Ruta raíz
@@ -43,7 +44,7 @@ class AppRouter {
     // --- Manejo de Errores  ---
     errorBuilder:
         (context, state) => Scaffold(
-          appBar: AppBar(title: const Text('Página no encontrada')),
+          appBar: AppBar(title: Text(AppLocalizations.of(context).notFound)),
           body: Center(
             child: Text(
               'Error: ${state.error?.message ?? 'Ruta no encontrada'}',

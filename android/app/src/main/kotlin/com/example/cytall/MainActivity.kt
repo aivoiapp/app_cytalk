@@ -1,4 +1,4 @@
-package com.example.cytall
+package com.example.cytalk
 
 import io.flutter.embedding.android.FlutterActivity
 

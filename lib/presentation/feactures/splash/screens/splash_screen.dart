@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import 'package:cytall/presentation/feactures/splash/services/services.dart';
-import 'package:cytall/presentation/feactures/splash/widgets/widgets.dart';
-import 'package:cytall/presentation/routes/app_router.dart' show AppRoutes;
+import 'package:cytalk/presentation/feactures/splash/services/services.dart';
+import 'package:cytalk/presentation/feactures/splash/widgets/widgets.dart';
+import 'package:cytalk/presentation/routes/app_router.dart' show AppRoutes;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

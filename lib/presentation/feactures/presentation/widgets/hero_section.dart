@@ -1,9 +1,10 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-import 'package:cytall/presentation/routes/app_router.dart' show AppRoutes;
+import 'package:cytalk/presentation/routes/app_router.dart' show AppRoutes;
 
-import 'package:cytall/presentation/feactures/presentation/widgets/widgets.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/feactures/presentation/widgets/widgets.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:go_router/go_router.dart';
 
 class HeroSection extends StatelessWidget {
@@ -20,13 +21,13 @@ class HeroSection extends StatelessWidget {
             text: TextSpan(
               style: AppTextStyles.headlineLarge.copyWith(
                 color: AppColors.primaryText,
-                fontSize: 36, // Ligeramente más grande para impacto móvil
+                fontSize: 36,
                 height: 1.2,
               ),
               children: <TextSpan>[
-                const TextSpan(text: 'Aprende inglés de forma '),
+                TextSpan(text: AppLocalizations.of(context).mainHeadline),
                 TextSpan(
-                  text: 'inteligente',
+                  text: AppLocalizations.of(context).intelligently,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     color: Colors.lightBlueAccent,
@@ -37,7 +38,7 @@ class HeroSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Prácticas personalizadas con IA que se adaptan a tu nivel y necesidades específicas',
+            AppLocalizations.of(context).practiceHeadline,
             style: AppTextStyles.body.copyWith(
               fontSize: 16,
               color: AppColors.secondaryText.withOpacity(0.9),
@@ -46,7 +47,7 @@ class HeroSection extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           SecondaryButton(
-            text: 'Comenzar ahora',
+            text: AppLocalizations.of(context).startNow, // Use localized text
             iconData: Icons.arrow_forward,
             onPressed: () {
               context.pushNamed(AppRoutes.onboarding);

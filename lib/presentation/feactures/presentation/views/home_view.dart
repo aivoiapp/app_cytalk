@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cytall/presentation/feactures/presentation/widgets/widgets.dart';
+import 'package:cytalk/presentation/feactures/presentation/widgets/widgets.dart';
+import 'package:cytalk/l10n/app_localizations.dart'; // Import AppLocalizations
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -13,20 +14,19 @@ class HomeView extends StatelessWidget {
         ).copyWith(top: 16.0, bottom: 32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            HeroSection(),
+          children: [
+            const HeroSection(),
 
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             
             FeatureCard(
               icon: Icons.bolt_outlined,
-              title: 'Gamificación',
-              description:
-                  'Mantente motivado con puntos, insignias y un sistema de niveles progresivo',
+              title: AppLocalizations.of(context).gamificationTitle, 
+              description: AppLocalizations.of(context).gamificationDescription, 
             ),
 
-            SizedBox(height: 24),
-            LevelTestCard(),
+            const SizedBox(height: 24),
+            const LevelTestCard(),
           ],
         ),
       ),

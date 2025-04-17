@@ -1,7 +1,8 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class GenderStepWidget extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -26,14 +27,14 @@ class GenderStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-              "¿Con qué género te identificas?",
-              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white), // Adjusted color for better contrast
+              AppLocalizations.of(context).genderPrompt,
+              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              "Ayúdanos a personalizar tu experiencia",
-              style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+              AppLocalizations.of(context).genderDescription,
+              style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 32),
@@ -56,20 +57,20 @@ class GenderStepWidget extends StatelessWidget {
               ),
               options: [
                 FormBuilderFieldOption(
-                  value: 'Masculino',
-                  child: Text('Masculino', style: AppTextStyles.itensGender.copyWith(color: Colors.white)), // Adjusted color for better contrast
+                  value: AppLocalizations.of(context).genderMale, // Use localized text
+                  child: Text(AppLocalizations.of(context).genderMale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
                 FormBuilderFieldOption(
-                  value: 'Femenino',
-                  child: Text('Femenino', style: AppTextStyles.itensGender.copyWith(color: Colors.white)), // Adjusted color for better contrast
+                  value: AppLocalizations.of(context).genderFemale, // Use localized text
+                  child: Text(AppLocalizations.of(context).genderFemale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
                 FormBuilderFieldOption(
-                  value: 'Otro',
-                  child: Text('Otro', style: AppTextStyles.itensGender.copyWith(color: Colors.white)), // Adjusted color for better contrast
+                  value: AppLocalizations.of(context).genderOther, // Use localized text
+                  child: Text(AppLocalizations.of(context).genderOther, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
               ],
               validator: FormBuilderValidators.required(
-                errorText: 'Por favor selecciona una opción',
+                errorText: AppLocalizations.of(context).pleaseSelectAnOption, // Use localized text
               ),
               wrapAlignment: WrapAlignment.start,
               activeColor: AppColors.radioActive,

@@ -1,6 +1,6 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:cytall/presentation/feactures/presentation/widgets/widgets.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class LevelTestCard extends StatelessWidget {
   const LevelTestCard({super.key});
@@ -99,7 +99,7 @@ class LevelTestCard extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Descubre tu nivel real de inglés',
+            AppLocalizations.of(context).discoverLevel,
             textAlign: TextAlign.center,
             style: AppTextStyles.headlineMedium.copyWith(
               color: AppColors.primaryText,
@@ -108,21 +108,13 @@ class LevelTestCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Nuestro test de nivel adaptativo utiliza inteligencia artificial para determinar con precisión tu nivel actual y ofrecerte ejercicios personalizados para mejorar rápidamente.',
+            AppLocalizations.of(context).discoverDescription,
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(
               color: AppColors.secondaryText,
               fontSize: 15,
               height: 1.4,
             ),
-          ),
-          const SizedBox(height: 24),
-          PrimaryButton(
-            text: 'Realizar test de nivel',
-            iconData: Icons.arrow_forward,
-            onPressed: () {
-              print('Realizar test presionado');
-            },
           ),
         ],
       ),

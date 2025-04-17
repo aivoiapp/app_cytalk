@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:cytall/presentation/resources/colors.dart';
+import 'package:cytalk/presentation/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingCard extends StatelessWidget {

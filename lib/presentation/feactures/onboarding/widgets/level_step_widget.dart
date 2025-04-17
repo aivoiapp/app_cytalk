@@ -1,7 +1,8 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:cytall/presentation/resources/resources.dart'; // Ajusta la ruta
+import 'package:cytalk/presentation/resources/resources.dart'; // Ajusta la ruta
 
 class LevelStepWidget extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -11,12 +12,12 @@ class LevelStepWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> levels = [
-      'A1 - Principiante',
-      'A2 - Elemental',
-      'B1 - Intermedio',
-      'B2 - Intermedio Alto',
-      'C1 - Avanzado',
-      'C2 - Maestría',
+      AppLocalizations.of(context).levelA1,
+      AppLocalizations.of(context).levelA2,
+      AppLocalizations.of(context).levelB1,
+      AppLocalizations.of(context).levelB2,
+      AppLocalizations.of(context).levelC1,
+      AppLocalizations.of(context).levelC2,
     ];
 
     return Container(
@@ -35,14 +36,14 @@ class LevelStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-              "¿Cuál crees que es tu nivel?",
-              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white), // Adjusted color for better contrast
+              AppLocalizations.of(context).levelPrompt, // Use localized text
+              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              "Esto nos ayuda a calibrar la prueba inicial",
-              style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+              AppLocalizations.of(context).testIntroInfo, // Use localized text
+              style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -54,7 +55,7 @@ class LevelStepWidget extends StatelessWidget {
               initialValue: 'A1',
               dropdownColor: AppColors.primaryPurple.withOpacity(0.7),
               decoration: InputDecoration(
-                hintText: 'Selecciona tu nivel',
+                hintText: AppLocalizations.of(context).selectYourLevel, // Use localized text
                 hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54), // Adjusted color for better contrast
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
@@ -91,7 +92,7 @@ class LevelStepWidget extends StatelessWidget {
                 ),
               )).toList(),
               validator: FormBuilderValidators.required(
-                errorText: 'Por favor selecciona tu nivel',
+                errorText: AppLocalizations.of(context).pleaseSelectYourLevel, // Use localized text
               ),
               onChanged: (_) {
                 formKey.currentState?.save();

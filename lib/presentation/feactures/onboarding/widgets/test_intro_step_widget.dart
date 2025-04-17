@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
+import 'package:cytalk/l10n/app_localizations.dart'; // Import AppLocalizations
 
 class TestIntroStepWidget extends StatelessWidget {
   const TestIntroStepWidget({super.key});
@@ -16,29 +17,29 @@ class TestIntroStepWidget extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          "Prueba de Nivel",
-          style: AppTextStyles.headlineMedium.copyWith(color: Colors.white), // Adjusted color for better contrast
+          AppLocalizations.of(context).testIntroTitle, // Use localized text
+          style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
-          "Vamos a determinar tu nivel de inglés con una prueba adaptativa",
-          style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+          AppLocalizations.of(context).testIntroDescription, // Use localized text
+          style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),
         _buildInfoItem(
           icon: Icons.check_circle_outline,
           colorICon: Colors.purple,
-          title: "15 preguntas adaptativas",
-          subtitle: "5 de gramática, 5 de comprensión lectora, 5 de vocabulario",
+          title: AppLocalizations.of(context).adaptiveQuestionsTitle, // Use localized text
+          subtitle: AppLocalizations.of(context).adaptiveQuestionsSubtitle, // Use localized text
         ),
         const SizedBox(height: 16),
         _buildInfoItem(
           icon: Icons.timer_outlined,
           colorICon: Colors.red,
-          title: "Tiempo limitado",
-          subtitle: "30 segundos por pregunta para evaluar tu fluidez",
+          title: AppLocalizations.of(context).limitedTimeTitle, // Use localized text
+          subtitle: AppLocalizations.of(context).limitedTimeSubtitle, // Use localized text
         ),
       ],
     );
@@ -76,13 +77,13 @@ class TestIntroStepWidget extends StatelessWidget {
                   title,
                   style: AppTextStyles.label.copyWith(
                     fontSize: 15,
-                    color: Colors.white, // Adjusted color for better contrast
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: AppTextStyles.body.copyWith(color: Colors.white70), // Adjusted color for better contrast
+                  style: AppTextStyles.body.copyWith(color: Colors.white70),
                 ),
               ],
             ),

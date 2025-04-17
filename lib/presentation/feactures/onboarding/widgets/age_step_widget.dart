@@ -1,8 +1,9 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class AgeStepWidget extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -27,24 +28,24 @@ class AgeStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 25),
             Text(
-              "¿Cuántos años tienes?",
-              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white), // Adjusted color for better contrast
+              AppLocalizations.of(context).agePrompt,
+              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              "Esto nos ayuda a personalizar tu experiencia",
-              style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+              AppLocalizations.of(context).ageDescription,
+              style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 15),
             
             FormBuilderTextField(
               name: 'age',
-              style: AppTextStyles.input.copyWith(color: Colors.white), // Adjusted color for better contrast
+              style: AppTextStyles.input.copyWith(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Ingresa tu edad',
-                hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54), // Adjusted color for better contrast
+                hintText: AppLocalizations.of(context).enterYourAge, // Use localized text
+                hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54),
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
                 border: OutlineInputBorder(
@@ -74,18 +75,18 @@ class AgeStepWidget extends StatelessWidget {
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(
-                  errorText: 'Por favor ingresa tu edad',
+                  errorText: AppLocalizations.of(context).pleaseEnterYourAge, // Use localized text
                 ),
                 FormBuilderValidators.numeric(
-                  errorText: 'Ingresa un número válido',
+                  errorText: AppLocalizations.of(context).enterAValidNumber, // Use localized text
                 ),
                 FormBuilderValidators.min(
                   5,
-                  errorText: 'Debes tener al menos 5 años',
+                  errorText: AppLocalizations.of(context).mustBeAtLeastFiveYearsOld, // Use localized text
                 ),
                 FormBuilderValidators.max(
                   100,
-                  errorText: 'Edad no válida',
+                  errorText: AppLocalizations.of(context).invalidAge, // Use localized text
                 ),
               ]),
               keyboardType: TextInputType.number,

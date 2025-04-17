@@ -1,7 +1,8 @@
+import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:cytall/presentation/resources/resources.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 
 class NameStepWidget extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -28,13 +29,13 @@ class NameStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 25),
             Text(
-              "¿Cómo te llamas?",
-              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white), // Adjusted color for better contrast
+              AppLocalizations.of(context).namePrompt,
+              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 8),
             Text(
-              "Nos encantaría conocerte",
-              style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+              AppLocalizations.of(context).welcomeTitle,
+              style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
@@ -42,11 +43,11 @@ class NameStepWidget extends StatelessWidget {
             
             FormBuilderTextField(
               name: 'name',
-              style: AppTextStyles.input.copyWith(color: Colors.white), // Adjusted color for better contrast
+              style: AppTextStyles.input.copyWith(color: Colors.white),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
-                hintText: 'Ingresa tu nombre',
-                hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54), // Adjusted color for better contrast
+                hintText: AppLocalizations.of(context).enterYourName, // Use localized text
+                hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54),
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
                 border: OutlineInputBorder(
@@ -76,15 +77,15 @@ class NameStepWidget extends StatelessWidget {
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(
-                  errorText: 'Por favor ingresa tu nombre',
+                  errorText: AppLocalizations.of(context).pleaseEnterYourName, // Use localized text
                 ),
                 FormBuilderValidators.minLength(
                   2,
-                  errorText: 'El nombre debe tener al menos 2 letras',
+                  errorText: AppLocalizations.of(context).nameMustHaveAtLeastTwoLetters, // Use localized text
                 ),
                 FormBuilderValidators.maxLength(
                   30,
-                  errorText: 'El nombre no debe exceder 30 caracteres',
+                  errorText: AppLocalizations.of(context).nameMustNotExceedThirtyCharacters, // Use localized text
                 ),
               ]),
               textCapitalization: TextCapitalization.words,
