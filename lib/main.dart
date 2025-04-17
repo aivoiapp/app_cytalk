@@ -26,7 +26,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale('en', ''); // Default locale
+  Locale _locale = WidgetsBinding.instance.platformDispatcher.locale;
+
 
   @override
   void initState() {
@@ -35,10 +36,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _initializeLocale() async {
-    String preferredLanguage = await _getPreferredLanguage();
-    if (mounted) {
+    final prefs = await SharedPreferences.getInstance();
+    final savedLang = prefs.getString('preferred_language');
+
+    if (savedLang != null) {
       setState(() {
-        _locale = Locale(preferredLanguage, '');
+        _locale = Locale(savedLang);
+      });
+    } else {
+      // If no saved value, use the system language
+      final deviceLang = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
+      setState(() {
+        _locale = Locale(deviceLang == 'es' ? 'es' : 'en');
       });
     }
   }
@@ -67,10 +76,5 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
     );
-  }
-
-  Future<String> _getPreferredLanguage() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('preferred_language') ?? 'en';
   }
 }
