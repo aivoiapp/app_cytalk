@@ -38,6 +38,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         setState(() {
           _currentPage = newPage;
         });
+        
+        // Cargar datos guardados cuando se regresa a un paso anterior
+        _loadSavedFormData(_currentPage);
       }
     });
   }
@@ -48,12 +51,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
+  // Mapa para almacenar los datos del formulario entre navegaciones
+  final Map<String, dynamic> _formData = {};
+
+  // Método para cargar datos guardados en el formulario actual
+  void _loadSavedFormData(int pageIndex) {
+    final formKey = _formKeys[pageIndex];
+    if (formKey != null && formKey.currentState != null) {
+      // Obtener los campos que corresponden a este formulario
+      switch (pageIndex) {
+        case 0: // Nombre
+          if (_formData.containsKey('name')) {
+            formKey.currentState!.patchValue({'name': _formData['name']});
+          }
+          break;
+        case 1: // Edad
+          if (_formData.containsKey('age')) {
+            formKey.currentState!.patchValue({'age': _formData['age']});
+          }
+          break;
+        case 2: // Género
+          if (_formData.containsKey('gender')) {
+            formKey.currentState!.patchValue({'gender': _formData['gender']});
+          }
+          break;
+        case 3: // Nivel
+          if (_formData.containsKey('level')) {
+            formKey.currentState!.patchValue({'level': _formData['level']});
+          }
+          break;
+      }
+    }
+  }
+
   void _nextPage() {
+    // Ocultar el teclado cuando se presiona el botón
+    FocusScope.of(context).unfocus();
+    
     final currentFormKey = _formKeys[_currentPage];
     bool isValid = true;
 
     if (currentFormKey != null) {
       isValid = currentFormKey.currentState?.saveAndValidate() ?? false;
+      
+      // Guardar los datos del formulario actual en el mapa
+      if (isValid && currentFormKey.currentState?.value != null) {
+        _formData.addAll(currentFormKey.currentState!.value);
+      }
     }
 
     if (isValid) {
@@ -66,11 +110,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         // Último paso: Acción final (Ej: Navegar a la prueba)
         print("Onboarding completado!");
         // Recolectar todos los datos
-        final name = _nameFormKey.currentState?.value['name'];
-        final age = _ageFormKey.currentState?.value['age'];
-        final gender = _genderFormKey.currentState?.value['gender'];
-        // ***** CAMBIO: Recolectar el nivel *****
-        final level = _levelFormKey.currentState?.value['level'];
+        final name = _formData['name'];
+        final age = _formData['age'];
+        final gender = _formData['gender'];
+        final level = _formData['level'];
         print('Datos: Nombre=$name, Edad=$age, Género=$gender, Nivel=$level');
         // TODO: Guardar en SQLite y navegar a la pantalla de prueba
         // Navigator.pushReplacementNamed(context, '/placement_test'); // O usando GoRouter
@@ -81,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -131,17 +174,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Expanded(
                 child: PageView(
                   controller: _pageController,
-                  // physics: const NeverScrollableScrollPhysics(),
+                  physics: const ClampingScrollPhysics(),
                   children: [
                     OnboardingCard(
                       child: NameStepWidget(formKey: _nameFormKey),
                     ),
                     OnboardingCard(child: AgeStepWidget(formKey: _ageFormKey)),
                     OnboardingCard(
-                      child: LevelStepWidget(formKey: _levelFormKey),
+                      child: GenderStepWidget(formKey: _genderFormKey),
                     ),
                     OnboardingCard(
-                      child: GenderStepWidget(formKey: _genderFormKey),
+                      child: LevelStepWidget(formKey: _levelFormKey),
                     ),
 
                     const OnboardingCard(child: TestIntroStepWidget()),
@@ -155,11 +198,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   vertical: 16.0,
                 ),
                 child: PrimaryButton(
-                  // ***** CAMBIO: Ajustar la lógica del texto del botón *****
+                  // Ajustar la lógica del texto del botón según el paso actual
                   text:
-                      _currentPage == 2
-                          ? "Continuar"
-                          : _currentPage == 3
+                      _currentPage == 3
                           ? "Comenzar prueba"
                           : "Continuar",
                   onPressed: _nextPage,

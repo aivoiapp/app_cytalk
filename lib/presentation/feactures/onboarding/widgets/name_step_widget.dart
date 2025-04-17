@@ -10,68 +10,87 @@ class NameStepWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-      key: formKey,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 25),
-          Text("¿Cómo te llamas?", style: AppTextStyles.headlineLarge),
-          const SizedBox(height: 8),
-          Text(
-            "Nos encantaría conocerte",
-            style: AppTextStyles.subtitle,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 32),
-          Text("Nombre", style: AppTextStyles.label),
-          const SizedBox(height: 8),
-          FormBuilderTextField(
-            name: 'name',
-            style: AppTextStyles.input,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(
-              hintText: 'Ingresa tu nombre',
-              hintStyle: AppTextStyles.placeholder,
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: BorderSide.none,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: const BorderSide(color: Colors.grey, width: 1),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: const BorderSide(color: Colors.grey, width: 1.5),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: const BorderSide(color: Colors.red, width: 1),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16.0),
-                borderSide: const BorderSide(color: Colors.red, width: 1),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 20,
-              ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: Colors.transparent,
+          width: 0,
+        ),
+      ),
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.zero,
+      child: FormBuilder(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 25),
+            Text(
+              "¿Cómo te llamas?",
+              style: AppTextStyles.headlineLarge.copyWith(color: Colors.white), // Adjusted color for better contrast
             ),
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: 'Por favor ingresa tu nombre',
+            const SizedBox(height: 8),
+            Text(
+              "Nos encantaría conocerte",
+              style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            
+            
+            FormBuilderTextField(
+              name: 'name',
+              style: AppTextStyles.input.copyWith(color: Colors.white), // Adjusted color for better contrast
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              decoration: InputDecoration(
+                hintText: 'Ingresa tu nombre',
+                hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54), // Adjusted color for better contrast
+                filled: true,
+                fillColor: AppColors.primaryPurple.withOpacity(0.3),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 1),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: BorderSide(color: Colors.white.withOpacity(0.5), width: 1.5),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: const BorderSide(color: Colors.red, width: 1),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                  borderSide: const BorderSide(color: Colors.red, width: 1),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 20,
+                ),
               ),
-              FormBuilderValidators.minLength(
-                2,
-                errorText: 'El nombre debe tener al menos 2 letras',
-              ),
-            ]),
-            textCapitalization: TextCapitalization.words,
-          ),
-        ],
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(
+                  errorText: 'Por favor ingresa tu nombre',
+                ),
+                FormBuilderValidators.minLength(
+                  2,
+                  errorText: 'El nombre debe tener al menos 2 letras',
+                ),
+                FormBuilderValidators.maxLength(
+                  30,
+                  errorText: 'El nombre no debe exceder 30 caracteres',
+                ),
+              ]),
+              textCapitalization: TextCapitalization.words,
+            ),
+          ],
+        ),
       ),
     );
   }

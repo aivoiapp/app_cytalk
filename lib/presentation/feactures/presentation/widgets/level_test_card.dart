@@ -27,21 +27,75 @@ class LevelTestCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Círculo "A2"
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.lightBlueAccent, width: 3),
-            ),
-            child: Text(
-              'A2',
-              style: AppTextStyles.headlineLarge.copyWith(
-                color: Colors.lightBlueAccent,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
+          // Círculos de niveles en horizontal
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Círculo A1
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.lightBlueAccent, width: 3),
+                ),
+                child: Text(
+                  'A1',
+                  style: AppTextStyles.headlineLarge.copyWith(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+              // Círculo A2
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.lightBlueAccent, width: 3),
+                ),
+                child: Text(
+                  'A2',
+                  style: AppTextStyles.headlineLarge.copyWith(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // Círculo B1
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.lightBlueAccent, width: 3),
+                ),
+                child: Text(
+                  'B1',
+                  style: AppTextStyles.headlineLarge.copyWith(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // Círculo B2
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.lightBlueAccent, width: 3),
+                ),
+                child: Text(
+                  'B2',
+                  style: AppTextStyles.headlineLarge.copyWith(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
           Text(

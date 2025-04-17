@@ -17,13 +17,7 @@ class HomeView extends StatelessWidget {
             HeroSection(),
 
             SizedBox(height: 32),
-
-            FeatureCard(
-              icon: Icons.menu_book_outlined,
-              title: 'Práctica Offline',
-              description:
-                  'Accede a tus ejercicios sin conexión, con almacenamiento local en tu dispositivo',
-            ),
+            
             FeatureCard(
               icon: Icons.bolt_outlined,
               title: 'Gamificación',

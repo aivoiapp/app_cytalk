@@ -11,20 +11,19 @@ class TestIntroStepWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           backgroundColor: AppColors.testIntroIconBackground,
-
           radius: 34,
           child: Icon(Icons.psychology_outlined, size: 48, color: Colors.red),
         ),
         const SizedBox(height: 24),
         Text(
           "Prueba de Nivel",
-          style: AppTextStyles.headlineMedium,
+          style: AppTextStyles.headlineMedium.copyWith(color: Colors.white), // Adjusted color for better contrast
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
           "Vamos a determinar tu nivel de inglés con una prueba adaptativa",
-          style: AppTextStyles.subtitle,
+          style: AppTextStyles.subtitle.copyWith(color: Colors.white70), // Adjusted color for better contrast
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 32),
@@ -32,14 +31,12 @@ class TestIntroStepWidget extends StatelessWidget {
           icon: Icons.check_circle_outline,
           colorICon: Colors.purple,
           title: "15 preguntas adaptativas",
-          subtitle:
-              "5 de gramática, 5 de comprensión lectora, 5 de vocabulario",
+          subtitle: "5 de gramática, 5 de comprensión lectora, 5 de vocabulario",
         ),
         const SizedBox(height: 16),
         _buildInfoItem(
           icon: Icons.timer_outlined,
           colorICon: Colors.red,
-
           title: "Tiempo limitado",
           subtitle: "30 segundos por pregunta para evaluar tu fluidez",
         ),
@@ -56,7 +53,7 @@ class TestIntroStepWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppColors.inputFill, // Reutilizamos el color de fondo del input
+        color: AppColors.inputFill,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
           color: AppColors.enabledBorder.withOpacity(0.5),
@@ -79,13 +76,13 @@ class TestIntroStepWidget extends StatelessWidget {
                   title,
                   style: AppTextStyles.label.copyWith(
                     fontSize: 15,
-                    color: Colors.black87,
+                    color: Colors.white, // Adjusted color for better contrast
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: AppTextStyles.body.copyWith(color: Colors.white),
+                  style: AppTextStyles.body.copyWith(color: Colors.white70), // Adjusted color for better contrast
                 ),
               ],
             ),

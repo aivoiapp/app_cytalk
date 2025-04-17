@@ -18,7 +18,7 @@ class AppColors {
 
   static const Color enabledBorder = Color(0x80FFFFFF);
   static const Color focusedBorder = Colors.white;
-  static const Color inputFill = Color.fromARGB(137, 147, 76, 156);
+  static const Color inputFill = Color.fromARGB(80, 147, 76, 156);
 
   static const Color radioActive = buttonGradientEnd;
   static const Color radioInactive = Color(0x80FFFFFF);
