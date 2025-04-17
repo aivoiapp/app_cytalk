@@ -13,7 +13,7 @@ class AnimatedLogo extends StatelessWidget {
         Image.asset('assets/images/logo.png', width: 100, height: 100),
         const SizedBox(height: 16),
         Text(
-          AppLocalizations.of(context).title,
+          AppLocalizations.of(context).appTitle,
           style: AppTextStyles.headlineMedium.copyWith(
             fontSize: 32,
             color: AppColors.primaryText,

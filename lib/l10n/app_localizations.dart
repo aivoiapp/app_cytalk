@@ -19,13 +19,11 @@ class AppLocalizations {
     const Locale('es', ''),
   ];
 
-  String get title {
-    return Intl.message(
-      'CyTalk',
-      name: 'title',
-      locale: locale.toString(),
-    );
-  }
+  String get appTitle => Intl.message(
+    'CyTalk',
+    name: 'appTitle',
+    locale: locale.toString(),
+  );
 
   String get welcome {
     return Intl.message(

@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-
-import 'package:cytalk/presentation/resources/resources.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cytalk/main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:cytalk/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onSignInPressed;
@@ -25,7 +24,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             Image.asset('assets/images/logo.png', width: 30, height: 30),
             const SizedBox(width: 8),
             Text(
-              AppLocalizations.of(context).title,
+              AppLocalizations.of(context).appTitle,
               style: AppTextStyles.headlineMedium.copyWith(
                 fontSize: 20,
                 color: AppColors.primaryText,
@@ -41,19 +40,22 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildLanguageSelector(BuildContext context) {
-    return FutureBuilder<String>(
-      future: _getPreferredLanguage(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const SizedBox.shrink();
-        }
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: DropdownButton<String>(
-            value: snapshot.data,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ValueListenableBuilder<Locale>(
+        valueListenable: localeNotifier,
+        builder: (context, locale, _) {
+          return DropdownButton<String>(
+            value: locale.languageCode,
             underline: Container(),
             icon: const Icon(Icons.language),
+            onChanged: (String? newLang) async {
+              if (newLang != null) {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setString('preferred_language', newLang);
+                localeNotifier.value = Locale(newLang);
+              }
+            },
             items: [
               DropdownMenuItem(
                 value: 'es',
@@ -76,24 +78,12 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ],
-            onChanged: (String? newValue) async {
-              if (newValue != null) {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('preferred_language', newValue);
-                MyApp.of(context).setLocale(Locale(newValue, ''));
-              }
-            },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
-  Future<String> _getPreferredLanguage() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('preferred_language') ?? 'en';
-  }
-
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // Add preferredSize implementation
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
