@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:cytalk/l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class AppHeader extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onSignInPressed;
@@ -51,9 +51,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.language),
             onChanged: (String? newLang) async {
               if (newLang != null) {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('preferred_language', newLang);
-                localeNotifier.value = Locale(newLang);
+                await localeNotifier.setLocale(Locale(newLang)); // Add await
               }
             },
             items: [
