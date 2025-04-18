@@ -123,7 +123,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get practiceHeadline => 'Prácticas personalizadas con IA que se adaptan a tu nivel y necesidades específicas';
 
   @override
-  String get mainHeadline => 'Aprende inglés de forma inteligente';
+  String get mainHeadline => 'Aprende inglés de forma ';
 
   @override
   String get discoverLevel => 'Descubre tu nivel real de inglés';
@@ -147,7 +147,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notFound => 'Página no encontrada';
 
   @override
-  String get intelligently => 'Inteligentemente';
+  String get intelligently => 'fácil';
 
   @override
   String get gamificationTitle => 'Gamificación';

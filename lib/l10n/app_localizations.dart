@@ -326,7 +326,7 @@ abstract class AppLocalizations {
   /// No description provided for @mainHeadline.
   ///
   /// In en, this message translates to:
-  /// **'Learn English the smart way'**
+  /// **'Learn English '**
   String get mainHeadline;
 
   /// No description provided for @discoverLevel.
@@ -374,7 +374,7 @@ abstract class AppLocalizations {
   /// No description provided for @intelligently.
   ///
   /// In en, this message translates to:
-  /// **'Intelligently'**
+  /// **' easily'**
   String get intelligently;
 
   /// No description provided for @gamificationTitle.
