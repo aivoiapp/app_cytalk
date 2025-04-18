@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocaleNotifier extends ValueNotifier<Locale> {
-  LocaleNotifier(Locale value) : super(value);
+  LocaleNotifier(super.value);
 
   static Future<Locale> getInitialLocale() async {
     final prefs = await SharedPreferences.getInstance();
