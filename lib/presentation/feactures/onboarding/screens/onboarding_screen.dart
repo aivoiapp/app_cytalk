@@ -1,8 +1,13 @@
 import 'package:cytalk/l10n/app_localizations.dart';
 import 'package:cytalk/presentation/feactures/onboarding/widgets/widgets.dart';
+import 'package:cytalk/presentation/feactures/placement_test/views/placement_test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:cytalk/presentation/resources/resources.dart';
+import 'package:cytalk/services/question_generator.dart';
+import 'package:cytalk/services/deepseek_api_service.dart';
+import 'package:provider/provider.dart';
+import 'package:cytalk/presentation/features/placement_test/widgets/evaluation_loader.dart'; // Import EvaluationLoader
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -16,13 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   final int _totalSteps = 5;
 
-  // Claves separadas para cada formulario
   final _nameFormKey = GlobalKey<FormBuilderState>();
   final _ageFormKey = GlobalKey<FormBuilderState>();
   final _genderFormKey = GlobalKey<FormBuilderState>();
   final _levelFormKey = GlobalKey<FormBuilderState>();
 
   late final Map<int, GlobalKey<FormBuilderState>> _formKeys;
+  late final QuestionGenerator _questionGenerator;
+  final Map<String, dynamic> _formData = {};
 
   @override
   void initState() {
@@ -33,14 +39,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       2: _genderFormKey,
       3: _levelFormKey,
     };
+    
+    final deepSeekService = Provider.of<DeepSeekApiService>(
+      context, 
+      listen: false
+    );
+    _questionGenerator = QuestionGenerator(
+      deepSeekApiService: deepSeekService
+    );
+
     _pageController.addListener(() {
       final newPage = _pageController.page?.round();
       if (newPage != null && newPage != _currentPage) {
-        setState(() {
-          _currentPage = newPage;
-        });
-        
-        // Cargar datos guardados cuando se regresa a un paso anterior
+        setState(() => _currentPage = newPage);
         _loadSavedFormData(_currentPage);
       }
     });
@@ -52,31 +63,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
-  // Mapa para almacenar los datos del formulario entre navegaciones
-  final Map<String, dynamic> _formData = {};
-
-  // Método para cargar datos guardados en el formulario actual
   void _loadSavedFormData(int pageIndex) {
     final formKey = _formKeys[pageIndex];
     if (formKey != null && formKey.currentState != null) {
-      // Obtener los campos que corresponden a este formulario
       switch (pageIndex) {
-        case 0: // Nombre
+        case 0:
           if (_formData.containsKey('name')) {
             formKey.currentState!.patchValue({'name': _formData['name']});
           }
           break;
-        case 1: // Edad
+        case 1:
           if (_formData.containsKey('age')) {
             formKey.currentState!.patchValue({'age': _formData['age']});
           }
           break;
-        case 2: // Género
+        case 2:
           if (_formData.containsKey('gender')) {
             formKey.currentState!.patchValue({'gender': _formData['gender']});
           }
           break;
-        case 3: // Nivel
+        case 3:
           if (_formData.containsKey('level')) {
             formKey.currentState!.patchValue({'level': _formData['level']});
           }
@@ -85,17 +91,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  void _nextPage() {
-    // Ocultar el teclado cuando se presiona el botón
+  void _nextPage() async {
     FocusScope.of(context).unfocus();
-    
+
     final currentFormKey = _formKeys[_currentPage];
     bool isValid = true;
 
     if (currentFormKey != null) {
       isValid = currentFormKey.currentState?.saveAndValidate() ?? false;
-      
-      // Guardar los datos del formulario actual en el mapa
       if (isValid && currentFormKey.currentState?.value != null) {
         _formData.addAll(currentFormKey.currentState!.value);
       }
@@ -108,16 +111,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           curve: Curves.easeInOut,
         );
       } else {
-        // Último paso: Acción final (Ej: Navegar a la prueba)
-        print("Onboarding completado!");
-        // Recolectar todos los datos
         final name = _formData['name'];
         final age = _formData['age'];
         final gender = _formData['gender'];
         final level = _formData['level'];
-        print('Datos: Nombre=$name, Edad=$age, Género=$gender, Nivel=$level');
-        // TODO: Guardar en SQLite y navegar a la pantalla de prueba
-        // Navigator.pushReplacementNamed(context, '/placement_test'); // O usando GoRouter
+
+        try {
+          // Show loader while generating questions
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EvaluationLoader(
+                evaluationMessages: [
+                  "Recopilando información del usuario",
+                  "Analizando preferencias de aprendizaje",
+                  "Generando preguntas personalizadas",
+                  "Preparando evaluación"
+                ],
+              ),
+            ),
+          );
+
+          // Generate questions in the background
+          final questions = await _questionGenerator.generatePlacementTestQuestions(
+            {
+              'name': name,
+              'age': age,
+              'gender': gender,
+              'level': level,
+            },
+            Localizations.localeOf(context)
+          );
+
+          if (!mounted) return;
+
+          // Navigate to the test screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PlacementTestScreen(questions: questions),
+            ),
+          );
+        } catch (e) {
+          if (!mounted) return;
+          Navigator.pop(context); // Close the loader if there's an error
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error generating questions: $e'))
+          );
+        }
       }
     }
   }
@@ -152,10 +193,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       'assets/images/logo.png',
                       width: 35,
                       height: 35,
-                      filterQuality: FilterQuality.medium,
-                      gaplessPlayback: true,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       'CyTalk',
                       style: AppTextStyles.headlineMedium.copyWith(
@@ -187,26 +226,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     OnboardingCard(
                       child: LevelStepWidget(formKey: _levelFormKey),
                     ),
-
                     const OnboardingCard(child: TestIntroStepWidget()),
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24.0,
                   vertical: 16.0,
                 ),
                 child: PrimaryButton(
-                  // Ajustar la lógica del texto del botón según el paso actual
                   text: _currentPage == 3
-                      ? AppLocalizations.of(context)!.startTest // Use localized text
-                      : AppLocalizations.of(context)!.continueText, // Use localized text
-                  onPressed: _nextPage,
+                      ? AppLocalizations.of(context)!.startTest
+                      : AppLocalizations.of(context)!.continueText,
+                  onPressed: _nextPage, // Ensure this is set correctly
                 ),
               ),
-              const SizedBox(height: 16),
             ],
           ),
         ),

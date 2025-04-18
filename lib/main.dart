@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:cytalk/core/localization/locale_notifier.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cytalk/services/deepseek_api_service.dart';
+import 'package:provider/provider.dart'; // Añade esta importación
 
 late final LocaleNotifier localeNotifier;
 
@@ -31,7 +33,16 @@ Idioma detectado:
   // Initialize Google Fonts first
   await GoogleFonts.pendingFonts([GoogleFonts.poppins()]);
   
-  runApp(const MyApp());
+  // Inicializa el servicio DeepSeek
+  const apiKey = 'sk-d484d5a0398f47ffa976c3fcbd785eea'; // Considera usar variables de entorno
+  final deepSeekService = DeepSeekApiService(apiKey: apiKey);
+  
+  runApp(
+    Provider<DeepSeekApiService>.value(
+      value: deepSeekService,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +57,7 @@ class MyApp extends StatelessWidget {
           title: 'CyTalk',
           routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,
-          locale: locale, // Asegurar que usa el locale actualizado
+          locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -54,15 +65,11 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [
-            Locale('en'), // English (no region)
-            Locale('es'), // Spanish (no region)
+            Locale('en'),
+            Locale('es'),
           ],
         );
       },
     );
   }
 }
-
-
-
-// Remove the _precacheFonts() function entirely
