@@ -17,13 +17,13 @@ class TestIntroStepWidget extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         Text(
-          AppLocalizations.of(context).testIntroTitle, // Use localized text
+          AppLocalizations.of(context)!.testIntroTitle, // Use localized text
           style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
-          AppLocalizations.of(context).testIntroDescription, // Use localized text
+          AppLocalizations.of(context)!.testIntroDescription, // Use localized text
           style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
           textAlign: TextAlign.center,
         ),
@@ -31,15 +31,15 @@ class TestIntroStepWidget extends StatelessWidget {
         _buildInfoItem(
           icon: Icons.check_circle_outline,
           colorICon: Colors.purple,
-          title: AppLocalizations.of(context).adaptiveQuestionsTitle, // Use localized text
-          subtitle: AppLocalizations.of(context).adaptiveQuestionsSubtitle, // Use localized text
+          title: AppLocalizations.of(context)!.adaptiveQuestionsTitle, // Use localized text
+          subtitle: AppLocalizations.of(context)!.adaptiveQuestionsSubtitle, // Use localized text
         ),
         const SizedBox(height: 16),
         _buildInfoItem(
           icon: Icons.timer_outlined,
           colorICon: Colors.red,
-          title: AppLocalizations.of(context).limitedTimeTitle, // Use localized text
-          subtitle: AppLocalizations.of(context).limitedTimeSubtitle, // Use localized text
+          title: AppLocalizations.of(context)!.limitedTimeTitle, // Use localized text
+          subtitle: AppLocalizations.of(context)!.limitedTimeSubtitle, // Use localized text
         ),
       ],
     );

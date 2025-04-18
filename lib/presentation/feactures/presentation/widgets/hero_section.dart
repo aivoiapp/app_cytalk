@@ -25,9 +25,9 @@ class HeroSection extends StatelessWidget {
                 height: 1.2,
               ),
               children: <TextSpan>[
-                TextSpan(text: AppLocalizations.of(context).mainHeadline),
+                TextSpan(text: AppLocalizations.of(context)!.mainHeadline),
                 TextSpan(
-                  text: AppLocalizations.of(context).intelligently,
+                  text: AppLocalizations.of(context)!.intelligently,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
                     color: Colors.lightBlueAccent,
@@ -38,7 +38,7 @@ class HeroSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            AppLocalizations.of(context).practiceHeadline,
+            AppLocalizations.of(context)!.practiceHeadline,
             style: AppTextStyles.body.copyWith(
               fontSize: 16,
               color: AppColors.secondaryText.withOpacity(0.9),
@@ -47,7 +47,7 @@ class HeroSection extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           SecondaryButton(
-            text: AppLocalizations.of(context).startNow, // Use localized text
+            text: AppLocalizations.of(context)!.startNow, // Use localized text
             iconData: Icons.arrow_forward,
             onPressed: () {
               context.pushNamed(AppRoutes.onboarding);

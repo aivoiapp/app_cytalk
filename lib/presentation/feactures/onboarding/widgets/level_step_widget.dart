@@ -12,12 +12,12 @@ class LevelStepWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> levels = [
-      AppLocalizations.of(context).levelA1,
-      AppLocalizations.of(context).levelA2,
-      AppLocalizations.of(context).levelB1,
-      AppLocalizations.of(context).levelB2,
-      AppLocalizations.of(context).levelC1,
-      AppLocalizations.of(context).levelC2,
+      AppLocalizations.of(context)!.levelA1,
+      AppLocalizations.of(context)!.levelA2,
+      AppLocalizations.of(context)!.levelB1,
+      AppLocalizations.of(context)!.levelB2,
+      AppLocalizations.of(context)!.levelC1,
+      AppLocalizations.of(context)!.levelC2,
     ];
 
     return Container(
@@ -36,13 +36,13 @@ class LevelStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-              AppLocalizations.of(context).levelPrompt, // Use localized text
+              AppLocalizations.of(context)!.levelPrompt, // Use localized text
               style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              AppLocalizations.of(context).testIntroInfo, // Use localized text
+              AppLocalizations.of(context)!.testIntroInfo, // Use localized text
               style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
@@ -55,7 +55,7 @@ class LevelStepWidget extends StatelessWidget {
               initialValue: 'A1',
               dropdownColor: AppColors.primaryPurple.withOpacity(0.7),
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).selectYourLevel, // Use localized text
+                hintText: AppLocalizations.of(context)!.selectYourLevel, // Use localized text
                 hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54), // Adjusted color for better contrast
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
@@ -92,7 +92,7 @@ class LevelStepWidget extends StatelessWidget {
                 ),
               )).toList(),
               validator: FormBuilderValidators.required(
-                errorText: AppLocalizations.of(context).pleaseSelectYourLevel, // Use localized text
+                errorText: AppLocalizations.of(context)!.pleaseSelectYourLevel, // Use localized text
               ),
               onChanged: (_) {
                 formKey.currentState?.save();

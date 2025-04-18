@@ -28,13 +28,13 @@ class AgeStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 25),
             Text(
-              AppLocalizations.of(context).agePrompt,
+              AppLocalizations.of(context)!.agePrompt,
               style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              AppLocalizations.of(context).ageDescription,
+              AppLocalizations.of(context)!.ageDescription,
               style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
@@ -44,7 +44,7 @@ class AgeStepWidget extends StatelessWidget {
               name: 'age',
               style: AppTextStyles.input.copyWith(color: Colors.white),
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).enterYourAge, // Use localized text
+                hintText: AppLocalizations.of(context)!.enterYourAge, // Use localized text
                 hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54),
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
@@ -75,18 +75,18 @@ class AgeStepWidget extends StatelessWidget {
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(
-                  errorText: AppLocalizations.of(context).pleaseEnterYourAge, // Use localized text
+                  errorText: AppLocalizations.of(context)!.pleaseEnterYourAge, // Use localized text
                 ),
                 FormBuilderValidators.numeric(
-                  errorText: AppLocalizations.of(context).enterAValidNumber, // Use localized text
+                  errorText: AppLocalizations.of(context)!.enterAValidNumber, // Use localized text
                 ),
                 FormBuilderValidators.min(
                   5,
-                  errorText: AppLocalizations.of(context).mustBeAtLeastFiveYearsOld, // Use localized text
+                  errorText: AppLocalizations.of(context)!.mustBeAtLeastFiveYearsOld, // Use localized text
                 ),
                 FormBuilderValidators.max(
                   100,
-                  errorText: AppLocalizations.of(context).invalidAge, // Use localized text
+                  errorText: AppLocalizations.of(context)!.invalidAge, // Use localized text
                 ),
               ]),
               keyboardType: TextInputType.number,

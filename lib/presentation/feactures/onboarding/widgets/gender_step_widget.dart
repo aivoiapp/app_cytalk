@@ -27,13 +27,13 @@ class GenderStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-              AppLocalizations.of(context).genderPrompt,
+              AppLocalizations.of(context)!.genderPrompt,
               style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              AppLocalizations.of(context).genderDescription,
+              AppLocalizations.of(context)!.genderDescription,
               style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
@@ -57,20 +57,20 @@ class GenderStepWidget extends StatelessWidget {
               ),
               options: [
                 FormBuilderFieldOption(
-                  value: AppLocalizations.of(context).genderMale, // Use localized text
-                  child: Text(AppLocalizations.of(context).genderMale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
+                  value: AppLocalizations.of(context)!.genderMale, // Use localized text
+                  child: Text(AppLocalizations.of(context)!.genderMale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
                 FormBuilderFieldOption(
-                  value: AppLocalizations.of(context).genderFemale, // Use localized text
-                  child: Text(AppLocalizations.of(context).genderFemale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
+                  value: AppLocalizations.of(context)!.genderFemale, // Use localized text
+                  child: Text(AppLocalizations.of(context)!.genderFemale, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
                 FormBuilderFieldOption(
-                  value: AppLocalizations.of(context).genderOther, // Use localized text
-                  child: Text(AppLocalizations.of(context).genderOther, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
+                  value: AppLocalizations.of(context)!.genderOther, // Use localized text
+                  child: Text(AppLocalizations.of(context)!.genderOther, style: AppTextStyles.itensGender.copyWith(color: Colors.white)),
                 ),
               ],
               validator: FormBuilderValidators.required(
-                errorText: AppLocalizations.of(context).pleaseSelectAnOption, // Use localized text
+                errorText: AppLocalizations.of(context)!.pleaseSelectAnOption, // Use localized text
               ),
               wrapAlignment: WrapAlignment.start,
               activeColor: AppColors.radioActive,

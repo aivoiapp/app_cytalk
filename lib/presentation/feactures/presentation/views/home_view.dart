@@ -21,8 +21,8 @@ class HomeView extends StatelessWidget {
             
             FeatureCard(
               icon: Icons.bolt_outlined,
-              title: AppLocalizations.of(context).gamificationTitle, 
-              description: AppLocalizations.of(context).gamificationDescription, 
+              title: AppLocalizations.of(context)!.gamificationTitle, 
+              description: AppLocalizations.of(context)!.gamificationDescription, 
             ),
 
             const SizedBox(height: 24),

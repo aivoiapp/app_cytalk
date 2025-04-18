@@ -29,12 +29,12 @@ class NameStepWidget extends StatelessWidget {
           children: [
             const SizedBox(height: 25),
             Text(
-              AppLocalizations.of(context).namePrompt,
+              AppLocalizations.of(context)!.namePrompt,
               style: AppTextStyles.headlineLarge.copyWith(color: Colors.white),
             ),
             const SizedBox(height: 8),
             Text(
-              AppLocalizations.of(context).welcomeTitle,
+              AppLocalizations.of(context)!.welcomeTitle,
               style: AppTextStyles.subtitle.copyWith(color: Colors.white70),
               textAlign: TextAlign.center,
             ),
@@ -46,7 +46,7 @@ class NameStepWidget extends StatelessWidget {
               style: AppTextStyles.input.copyWith(color: Colors.white),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context).enterYourName, // Use localized text
+                hintText: AppLocalizations.of(context)!.enterYourName, // Use localized text
                 hintStyle: AppTextStyles.placeholder.copyWith(color: Colors.white54),
                 filled: true,
                 fillColor: AppColors.primaryPurple.withOpacity(0.3),
@@ -77,15 +77,15 @@ class NameStepWidget extends StatelessWidget {
               ),
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(
-                  errorText: AppLocalizations.of(context).pleaseEnterYourName, // Use localized text
+                  errorText: AppLocalizations.of(context)!.pleaseEnterYourName, // Use localized text
                 ),
                 FormBuilderValidators.minLength(
                   2,
-                  errorText: AppLocalizations.of(context).nameMustHaveAtLeastTwoLetters, // Use localized text
+                  errorText: AppLocalizations.of(context)!.nameMustHaveAtLeastTwoLetters, // Use localized text
                 ),
                 FormBuilderValidators.maxLength(
                   30,
-                  errorText: AppLocalizations.of(context).nameMustNotExceedThirtyCharacters, // Use localized text
+                  errorText: AppLocalizations.of(context)!.nameMustNotExceedThirtyCharacters, // Use localized text
                 ),
               ]),
               textCapitalization: TextCapitalization.words,

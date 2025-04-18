@@ -99,7 +99,7 @@ class LevelTestCard extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            AppLocalizations.of(context).discoverLevel,
+            AppLocalizations.of(context)!.discoverLevel,
             textAlign: TextAlign.center,
             style: AppTextStyles.headlineMedium.copyWith(
               color: AppColors.primaryText,
@@ -108,7 +108,7 @@ class LevelTestCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            AppLocalizations.of(context).discoverDescription,
+            AppLocalizations.of(context)!.discoverDescription,
             textAlign: TextAlign.center,
             style: AppTextStyles.body.copyWith(
               color: AppColors.secondaryText,

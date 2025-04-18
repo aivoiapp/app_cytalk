@@ -24,7 +24,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             Image.asset('assets/images/logo.png', width: 30, height: 30),
             const SizedBox(width: 8),
             Text(
-              AppLocalizations.of(context).appTitle,
+              AppLocalizations.of(context)!.appTitle,
               style: AppTextStyles.headlineMedium.copyWith(
                 fontSize: 20,
                 color: AppColors.primaryText,
@@ -61,7 +61,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     SvgPicture.asset('assets/images/es.svg', width: 24),
                     const SizedBox(width: 8),
-                    Text(AppLocalizations.of(context).languageEs),
+                    Text(AppLocalizations.of(context)!.languageEs),
                   ],
                 ),
               ),
@@ -71,7 +71,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     SvgPicture.asset('assets/images/en.svg', width: 24),
                     const SizedBox(width: 8),
-                    Text(AppLocalizations.of(context).languageEn),
+                    Text(AppLocalizations.of(context)!.languageEn),
                   ],
                 ),
               ),

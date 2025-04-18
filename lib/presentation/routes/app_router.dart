@@ -44,7 +44,7 @@ class AppRouter {
     // --- Manejo de Errores  ---
     errorBuilder:
         (context, state) => Scaffold(
-          appBar: AppBar(title: Text(AppLocalizations.of(context).notFound)),
+          appBar: AppBar(title: Text(AppLocalizations.of(context)!.notFound)),
           body: Center(
             child: Text(
               'Error: ${state.error?.message ?? 'Ruta no encontrada'}',

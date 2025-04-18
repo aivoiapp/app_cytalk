@@ -201,8 +201,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: PrimaryButton(
                   // Ajustar la lógica del texto del botón según el paso actual
                   text: _currentPage == 3
-                      ? AppLocalizations.of(context).startTest // Use localized text
-                      : AppLocalizations.of(context).continueText, // Use localized text
+                      ? AppLocalizations.of(context)!.startTest // Use localized text
+                      : AppLocalizations.of(context)!.continueText, // Use localized text
                   onPressed: _nextPage,
                 ),
               ),
