@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:cytalk/presentation/feactures/presentation/screens/home_screen.dart';
 import 'package:cytalk/presentation/feactures/onboarding/onboarding.dart';
 import 'package:cytalk/presentation/feactures/splash/splash.dart';
+import 'package:cytalk/presentation/features/placement_test/widgets/result_loader.dart';
 
 class AppRoutes {
   static const String splash = '/'; // Ruta raíz
@@ -37,6 +38,13 @@ class AppRouter {
         name: AppRoutes.onboarding,
         builder: (BuildContext context, GoRouterState state) {
           return const OnboardingScreen();
+        },
+      ),
+      GoRoute(
+        path: '/result_loader',
+        name: 'result_loader',
+        builder: (BuildContext context, GoRouterState state) {
+          return const ResultLoader();
         },
       ),
     ],

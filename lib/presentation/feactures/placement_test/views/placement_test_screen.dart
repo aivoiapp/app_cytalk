@@ -5,6 +5,7 @@ import 'package:cytalk/models/question_model.dart'; // Ensure this model exists
 import 'package:cytalk/presentation/feactures/placement_test/views/question_view.dart'; // Corrected path
 import 'package:cytalk/presentation/feactures/placement_test/views/progress_bar.dart'; // Corrected path
 import 'package:cytalk/presentation/resources/resources.dart';
+import 'package:go_router/go_router.dart';
 
 class PlacementTestScreen extends StatefulWidget {
   final List<Question> questions; // Ensure Question model is defined
@@ -63,8 +64,9 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
           'Placement Test',
           style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
         ),
-        backgroundColor: AppColors.primaryPurple,
+        backgroundColor: AppColors.backgroundGradientStart,
         elevation: 0,
+        centerTitle: true,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -76,25 +78,76 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
+          
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Question ${currentQuestionIndex + 1} of ${widget.questions.length}',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.primaryText),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.buttonGradientStart,
+                          AppColors.inputFill,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Text(
+                      'Question ${currentQuestionIndex + 1} of ${widget.questions.length}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.primaryText),
+                    ),
                   ),
-                  Text(
-                    'Time: $_timeRemaining sec',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText),
+                  Container(
+                    padding: EdgeInsets.all(28.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.buttonGradientStart,
+                          AppColors.inputFill,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Text(
+                      '$_timeRemaining sec',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                    ),
                   ),
-                  Text(
-                    'Excess Time: $_excessTimeCounter',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.buttonGradientStart,
+                          AppColors.inputFill,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Text(
+                      'Excess Time: $_excessTimeCounter',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.primaryText),
+                    ),
                   ),
                 ],
               ),
@@ -125,12 +178,12 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
                         onOptionSelected: (selectedOption) {
                           setState(() {
                             selectedAnswer = selectedOption;
-                            _answers[currentQuestionIndex] = selectedOption; // Store the answer
+                            _answers[currentQuestionIndex] = selectedOption;
                           });
                         },
-                        selectedAnswer: _answers[currentQuestionIndex], // Retrieve stored answer
+                        selectedAnswer: _answers[currentQuestionIndex],
                       ),
-                      const SizedBox(height: 16), // Add spacing between questions and buttons
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -139,8 +192,8 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
                               onPressed: () {
                                 setState(() {
                                   currentQuestionIndex--;
-                                  selectedAnswer = _answers[currentQuestionIndex]; // Retrieve stored answer
-                                  _timeRemaining = 30; // Reset timer for previous question
+                                  selectedAnswer = _answers[currentQuestionIndex];
+                                  _timeRemaining = 30;
                                   _startTimer();
                                 });
                               },
@@ -150,8 +203,8 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
                             const SizedBox(width: 100),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.backgroundGradientStart, // Correct parameter name
-                              foregroundColor: Colors.white, // Correct parameter name
+                              backgroundColor: AppColors.backgroundGradientStart,
+                              foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -160,15 +213,14 @@ class PlacementTestScreenState extends State<PlacementTestScreen> {
                                 ? null
                                 : () {
                                     setState(() {
-                                      _answers[currentQuestionIndex] = selectedAnswer; // Store the answer
+                                      _answers[currentQuestionIndex] = selectedAnswer;
                                       if (currentQuestionIndex < widget.questions.length - 1) {
                                         currentQuestionIndex++;
-                                        selectedAnswer = _answers[currentQuestionIndex]; // Retrieve stored answer
-                                        _timeRemaining = 30; // Reset timer for next question
+                                        selectedAnswer = _answers[currentQuestionIndex];
+                                        _timeRemaining = 30;
                                         _startTimer();
                                       } else {
-                                        // Navegar a los resultados
-                                        Navigator.pushNamed(context, '/test_results');
+                                        GoRouter.of(context).go('/result_loader');
                                       }
                                     });
                                   },

@@ -37,8 +37,8 @@ class QuestionView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     side: BorderSide(
                       color: selectedAnswer == option
-                          ? Theme.of(context).primaryColor
-                          : Colors.transparent,
+                      ? Theme.of(context).primaryColor
+                      : Colors.transparent,
                       width: 2,
                     ),
                   ),
@@ -53,6 +53,14 @@ class QuestionView extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: ListTile(
                       title: Text(

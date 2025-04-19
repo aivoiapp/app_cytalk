@@ -2,29 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:flutter/services.dart';
 
-class EvaluationLoader extends StatefulWidget {
+class ResultLoader extends StatefulWidget {
   final String title;
   final String subtitle;
-  final List<String> evaluationMessages;
+  final List<String> resultMessages;
   final bool fullScreen;
 
-  const EvaluationLoader({
+  const ResultLoader({
     super.key,
-    this.title = "Evaluación de Nivel",
-    this.subtitle = "Por favor espera unos segundos",
-    this.evaluationMessages = const [],
+    this.title = "Preparando Resultados",
+    this.subtitle = "Por favor espera mientras generamos tus resultados",
+    this.resultMessages = const [],
     this.fullScreen = true,
   });
 
   @override
-  EvaluationLoaderState createState() => EvaluationLoaderState();
+  ResultLoaderState createState() => ResultLoaderState();
 }
 
-class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerProviderStateMixin {
+class ResultLoaderState extends State<ResultLoader> with SingleTickerProviderStateMixin {
   int elapsedTime = 0;
   double progressPercentage = 0;
   int currentTip = 0;
-  int currentMessageIndex = 0; // Índice para el mensaje actual
+  int currentMessageIndex = 0;
+  final List<String> processingMessages = [
+    "Procesando...",
+    "Analizando tus respuestas",
+    "Procesando...",
+    "Evaluando tu nivel de gramática",
+    "Procesando...",
+    "Calculando tu nivel de vocabulario",
+    "Procesando...",
+    "Determinando tus fortalezas y debilidades",
+    "Procesando...",
+    "Preparando recomendaciones personalizadas",
+    "Procesando..."
+  ];
+
   late AnimationController _controller;
 
   final List<String> tips = [
@@ -43,20 +57,25 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
       duration: const Duration(milliseconds: 300),
     )..forward();
 
-    // Contador de tiempo
     _startTimer();
-    // Animación de progreso
     _simulateProgress();
-    // Rotación de tips
     _rotateTips();
-    // Mostrar mensajes en cascada
     _showMessagesInCascade();
+    _showProcessingMessages();
 
-    // Bloquear orientación a portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+  }
+
+  void _showProcessingMessages() {
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted && currentMessageIndex < processingMessages.length) {
+        setState(() => currentMessageIndex++);
+        _showProcessingMessages();
+      }
+    });
   }
 
   void _startTimer() {
@@ -76,7 +95,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
     Future.delayed(const Duration(seconds: 10), () {
       if (mounted) {
         setState(() {
-          progressPercentage = 30; // Stage 1 complete
+          progressPercentage = 30;
         });
       }
     });
@@ -84,7 +103,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
     Future.delayed(const Duration(seconds: 25), () {
       if (mounted) {
         setState(() {
-          progressPercentage = 60; // Stage 2 complete
+          progressPercentage = 60;
         });
       }
     });
@@ -92,7 +111,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
     Future.delayed(const Duration(seconds: 50), () {
       if (mounted) {
         setState(() {
-          progressPercentage = 90; // Stage 3 complete
+          progressPercentage = 90;
         });
       }
     });
@@ -120,7 +139,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
 
   void _showMessagesInCascade() {
     Future.delayed(const Duration(seconds: 5), () {
-      if (mounted && currentMessageIndex < widget.evaluationMessages.length) {
+      if (mounted && currentMessageIndex < widget.resultMessages.length) {
         setState(() => currentMessageIndex++);
         _showMessagesInCascade();
       }
@@ -152,7 +171,6 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header con título y tiempo
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -196,8 +214,6 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                   ],
                 ),
                 const SizedBox(height: 24),
-
-                // Barra de progreso
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -246,8 +262,6 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                   ],
                 ),
                 const SizedBox(height: 32),
-
-                // Contenido principal
                 Expanded(
                   child: Container(
                     width: double.infinity,
@@ -282,7 +296,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                "Creando una experiencia de evaluación hecha a tu medida",
+                                "Generando tus resultados personalizados",
                                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.primaryText,
@@ -294,10 +308,8 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                           ],
                         ),
                         const SizedBox(height: 24),
-
-                        // Mensajes de evaluación
-                        if (widget.evaluationMessages.isNotEmpty) ...[
-                          for (int i = 0; i <= currentMessageIndex && i < widget.evaluationMessages.length; i++)
+                        if (widget.resultMessages.isNotEmpty) ...[
+                          for (int i = 0; i <= currentMessageIndex && i < widget.resultMessages.length; i++)
                             Padding(
                               padding: const EdgeInsets.only(bottom: 12),
                               child: Row(
@@ -311,7 +323,7 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
-                                      widget.evaluationMessages[i],
+                                      widget.resultMessages[i],
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                         color: AppColors.secondaryText,
                                       ),
@@ -324,8 +336,34 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                             ),
                           const SizedBox(height: 16),
                         ],
-
-                        // Último mensaje con animación
+                        if (processingMessages.isNotEmpty) ...[
+                          for (int i = 0; i <= currentMessageIndex && i < processingMessages.length; i++)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 20,
+                                    color: AppColors.radioActive,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      processingMessages[i],
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AppColors.secondaryText,
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          const SizedBox(height: 16),
+                        ],
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
@@ -353,31 +391,28 @@ class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPro
                           ),
                         ),
                         const SizedBox(height: 24),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: AppColors.inputFill.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: AppColors.inputFill.withOpacity(0.7),
+                            ),
+                          ),
+                          child: Text(
+                            tips[currentTip],
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontStyle: FontStyle.italic,
+                              color: AppColors.secondaryText,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Tip del sistema
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.inputFill.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: AppColors.inputFill.withOpacity(0.7),
-                    ),
-                  ),
-                  child: Text(
-                    tips[currentTip],
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontStyle: FontStyle.italic,
-                      color: AppColors.secondaryText,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                // Pie de página
                 Center(
                   child: Text(
                     widget.subtitle,
