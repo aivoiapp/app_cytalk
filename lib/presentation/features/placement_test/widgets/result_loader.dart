@@ -412,6 +412,24 @@ class ResultLoaderState extends State<ResultLoader> with SingleTickerProviderSta
                     ),
                   ),
                 ),
+                const SizedBox(height: 24),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.inputFill.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: AppColors.inputFill.withOpacity(0.7),
+                    ),
+                  ),
+                  child: Text(
+                    tips[currentTip],
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontStyle: FontStyle.italic,
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Center(
                   child: Text(

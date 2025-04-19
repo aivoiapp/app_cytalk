@@ -124,10 +124,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             MaterialPageRoute(
               builder: (context) => EvaluationLoader(
                 evaluationMessages: [
+                  "Procesando...",
                   "Recopilando información del usuario",
+                  "Procesando...",
                   "Analizando preferencias de aprendizaje",
+                  "Procesando...",
                   "Generando preguntas personalizadas",
-                  "Preparando evaluación"
+                  "Procesando...",
+                  "Preparando evaluación",
+                  "Procesando...",
+                  "Preparando entorno de evaluación",
                 ],
               ),
             ),
