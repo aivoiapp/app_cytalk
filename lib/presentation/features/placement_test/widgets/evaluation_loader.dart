@@ -17,13 +17,14 @@ class EvaluationLoader extends StatefulWidget {
   });
 
   @override
-  _EvaluationLoaderState createState() => _EvaluationLoaderState();
+  EvaluationLoaderState createState() => EvaluationLoaderState();
 }
 
-class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerProviderStateMixin {
+class EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerProviderStateMixin {
   int elapsedTime = 0;
   double progressPercentage = 0;
   int currentTip = 0;
+  int currentMessageIndex = 0; // Índice para el mensaje actual
   late AnimationController _controller;
 
   final List<String> tips = [
@@ -41,31 +42,21 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
       vsync: this,
       duration: const Duration(milliseconds: 300),
     )..forward();
-    
+
     // Contador de tiempo
     _startTimer();
     // Animación de progreso
     _simulateProgress();
     // Rotación de tips
     _rotateTips();
-    
+    // Mostrar mensajes en cascada
+    _showMessagesInCascade();
+
     // Bloquear orientación a portrait
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
   }
 
   void _startTimer() {
@@ -78,14 +69,44 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
   }
 
   void _simulateProgress() {
-    Future.delayed(const Duration(milliseconds: 200), () {
-      if (mounted && progressPercentage < 100) {
+    setState(() {
+      progressPercentage = 0;
+    });
+
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) {
         setState(() {
-          progressPercentage += progressPercentage < 90 ? 3.6 : 0.5;
+          progressPercentage = 30; // Stage 1 complete
         });
-        _simulateProgress();
       }
     });
+
+    Future.delayed(const Duration(seconds: 25), () {
+      if (mounted) {
+        setState(() {
+          progressPercentage = 60; // Stage 2 complete
+        });
+      }
+    });
+
+    Future.delayed(const Duration(seconds: 50), () {
+      if (mounted) {
+        setState(() {
+          progressPercentage = 90; // Stage 3 complete
+        });
+      }
+    });
+
+    _completeProgress();
+  }
+
+  Future<void> _completeProgress() async {
+    await Future.delayed(const Duration(seconds: 60));
+    if (mounted) {
+      setState(() {
+        progressPercentage = 100;
+      });
+    }
   }
 
   void _rotateTips() {
@@ -93,6 +114,15 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
       if (mounted) {
         setState(() => currentTip = (currentTip + 1) % tips.length);
         _rotateTips();
+      }
+    });
+  }
+
+  void _showMessagesInCascade() {
+    Future.delayed(const Duration(seconds: 5), () {
+      if (mounted && currentMessageIndex < widget.evaluationMessages.length) {
+        setState(() => currentMessageIndex++);
+        _showMessagesInCascade();
       }
     });
   }
@@ -113,7 +143,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
 
   Widget _buildFullScreenLoader() {
     return Scaffold(
-      backgroundColor: AppColors.backgroundGradientEnd.withOpacity(0.9), // Added transparency
+      backgroundColor: AppColors.backgroundGradientEnd.withOpacity(0.9),
       body: SafeArea(
         child: FadeTransition(
           opacity: _controller,
@@ -142,7 +172,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.deepPurple.withOpacity(0.8), // Added transparency
+                        color: AppColors.deepPurple.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -183,7 +213,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                         Container(
                           height: 8,
                           decoration: BoxDecoration(
-                            color: AppColors.backgroundGradientStart.withOpacity(0.5), // Added transparency
+                            color: AppColors.backgroundGradientStart.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -223,7 +253,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient( // Changed to gradient
+                      gradient: LinearGradient(
                         colors: [
                           AppColors.backgroundGradientStart.withOpacity(0.5),
                           AppColors.backgroundGradientEnd.withOpacity(0.5),
@@ -250,11 +280,15 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                               color: AppColors.buttonGradientEnd,
                             ),
                             const SizedBox(width: 8),
-                            Text(
-                              "Creando una experiencia de evaluación hecha a tu medida",
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primaryText,
+                            Expanded(
+                              child: Text(
+                                "Creando una experiencia de evaluación hecha a tu medida",
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryText,
+                                ),
+                                softWrap: true,                                
+                                overflow: TextOverflow.visible,
                               ),
                             ),
                           ],
@@ -263,28 +297,31 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
 
                         // Mensajes de evaluación
                         if (widget.evaluationMessages.isNotEmpty) ...[
-                          ...widget.evaluationMessages.map((message) => Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  size: 20,
-                                  color: AppColors.radioActive,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    message,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: AppColors.secondaryText,
+                          for (int i = 0; i <= currentMessageIndex && i < widget.evaluationMessages.length; i++)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 20,
+                                    color: AppColors.radioActive,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      widget.evaluationMessages[i],
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: AppColors.secondaryText,
+                                      ),
+                                      softWrap: true,
+                                      overflow: TextOverflow.visible,
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          )),
                           const SizedBox(height: 16),
                         ],
 
@@ -292,7 +329,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.deepPurple.withOpacity(0.8), // Added transparency
+                            color: AppColors.deepPurple.withOpacity(0.8),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -321,10 +358,10 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: AppColors.inputFill.withOpacity(0.7), // Added transparency
+                            color: AppColors.inputFill.withOpacity(0.7),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: AppColors.inputFill.withOpacity(0.7), // Added transparency
+                              color: AppColors.inputFill.withOpacity(0.7),
                             ),
                           ),
                           child: Text(
@@ -362,7 +399,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground.withOpacity(0.9), // Added transparency
+        color: AppColors.cardBackground.withOpacity(0.9),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -391,7 +428,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.deepPurple, // Improved contrast
+                  color: AppColors.deepPurple,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -399,13 +436,13 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
                     const Icon(
                       Icons.access_time,
                       size: 14,
-                      color: AppColors.primaryText, // Improved contrast
+                      color: AppColors.primaryText,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       _formatTime(elapsedTime),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.primaryText, // Improved contrast
+                        color: AppColors.primaryText,
                       ),
                     ),
                   ],
@@ -416,7 +453,7 @@ class _EvaluationLoaderState extends State<EvaluationLoader> with SingleTickerPr
           const SizedBox(height: 16),
           LinearProgressIndicator(
             value: progressPercentage / 100,
-            backgroundColor: AppColors.backgroundGradientStart.withOpacity(0.5), // Added transparency
+            backgroundColor: AppColors.backgroundGradientStart.withOpacity(0.5),
             color: AppColors.buttonGradientEnd,
           ),
           const SizedBox(height: 8),

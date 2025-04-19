@@ -7,7 +7,8 @@ import 'package:cytalk/presentation/resources/resources.dart';
 import 'package:cytalk/services/question_generator.dart';
 import 'package:cytalk/services/deepseek_api_service.dart';
 import 'package:provider/provider.dart';
-import 'package:cytalk/presentation/features/placement_test/widgets/evaluation_loader.dart'; // Import EvaluationLoader
+import 'package:cytalk/presentation/features/placement_test/widgets/evaluation_loader.dart';
+import 'package:cytalk/presentation/widgets/error_dialog.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -155,9 +156,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         } catch (e) {
           if (!mounted) return;
           Navigator.pop(context); // Close the loader if there's an error
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error generating questions: $e'))
-          );
+          
+          // Usar el widget ErrorDialog reutilizable
+          ErrorDialog.show(context, e.toString());
         }
       }
     }
@@ -215,6 +216,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: PageView(
                   controller: _pageController,
                   physics: const ClampingScrollPhysics(),
+                  onPageChanged: (page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
                   children: [
                     OnboardingCard(
                       child: NameStepWidget(formKey: _nameFormKey),
@@ -236,10 +242,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   vertical: 16.0,
                 ),
                 child: PrimaryButton(
-                  text: _currentPage == 3
+                  text: _currentPage == _totalSteps - 1
                       ? AppLocalizations.of(context)!.startTest
                       : AppLocalizations.of(context)!.continueText,
-                  onPressed: _nextPage, // Ensure this is set correctly
+                  onPressed: _nextPage,
                 ),
               ),
             ],

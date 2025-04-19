@@ -1,3 +1,4 @@
+import 'package:cytalk/presentation/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatelessWidget {
@@ -10,8 +11,8 @@ class ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
       value: currentStep / totalSteps,
-      backgroundColor: Colors.grey[300],
-      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+      backgroundColor: AppColors.backgroundGradientStart.withOpacity(0.3), // Adjusted transparency
+      valueColor: AlwaysStoppedAnimation<Color>(AppColors.buttonGradientEnd),
     );
   }
 }

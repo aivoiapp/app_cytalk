@@ -1,3 +1,4 @@
+import 'package:cytalk/presentation/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cytalk/models/question_model.dart';
 
@@ -24,6 +25,7 @@ class QuestionView extends StatelessWidget {
             question.question,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: AppColors.primaryText, // Ensure text is visible
                 ),
           ),
           const SizedBox(height: 24),
@@ -40,14 +42,30 @@ class QuestionView extends StatelessWidget {
                       width: 2,
                     ),
                   ),
-                  child: ListTile(
-                    title: Text(option),
-                    trailing: Radio<String>(
-                      value: option,
-                      groupValue: selectedAnswer,
-                      onChanged: (value) => onOptionSelected(value!),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.primaryPurple.withOpacity(0.9),
+                          AppColors.inputFill.withOpacity(0.9),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    onTap: () => onOptionSelected(option),
+                    child: ListTile(
+                      title: Text(
+                        option,
+                        style: TextStyle(color: AppColors.primaryText), // Ensure text is visible
+                      ),
+                      trailing: Radio<String>(
+                        value: option,
+                        groupValue: selectedAnswer,
+                        onChanged: (value) => onOptionSelected(value!),
+                      ),
+                      onTap: () => onOptionSelected(option),
+                    ),
                   ),
                 ),
               )),
